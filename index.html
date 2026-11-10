@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Alsafa Skin & Hair Clinic — Patient Feedback</title>
+<style>
+  :root {
+    --bg: #f6f8fb;
+    --card: #ffffff;
+    --ink: #1b2330;
+    --muted: #5a6674;
+    --brand: #0f766e;
+    --brand-ink: #ffffff;
+    --accent: #0ea5a3;
+    --border: #e3e8ef;
+    --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: linear-gradient(180deg, #eaf4f3 0%, var(--bg) 300px);
+    color: var(--ink);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 24px 16px 64px;
+  }
+  header.hero {
+    text-align: center;
+    padding: 28px 12px 20px;
+  }
+  header.hero .logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--brand);
+    color: var(--brand-ink);
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  header.hero h1 {
+    margin: 0 0 6px;
+    font-size: clamp(22px, 4vw, 28px);
+    letter-spacing: .2px;
+  }
+  header.hero p.sub {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  form {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 22px;
+    margin-top: 18px;
+  }
+  fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 0 22px;
+  }
+  legend {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--brand);
+    padding: 0 0 8px;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 560px) { .row { grid-template-columns: 1fr; } }
+  label.field {
+    display: block;
+    margin-bottom: 14px;
+    font-size: 14px;
+    color: var(--ink);
+  }
+  label.field > .lab {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  input[type="text"], input[type="tel"], input[type="date"], input[type="email"], select, textarea {
+    width: 100%;
+    padding: 10px 12px;
+    font: inherit;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(14,165,163,.15);
+  }
+  textarea { min-height: 80px; resize: vertical; }
+
+  .q {
+    padding: 14px 0;
+    border-top: 1px dashed var(--border);
+  }
+  .q:first-of-type { border-top: none; padding-top: 4px; }
+  .q .ask {
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .scale {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .scale label {
+    flex: 1 1 60px;
+    text-align: center;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 6px;
+    cursor: pointer;
+    font-size: 13px;
+    background: #fff;
+    transition: all .15s;
+  }
+  .scale input { position: absolute; opacity: 0; pointer-events: none; }
+  .scale label:hover { border-color: var(--accent); }
+  .scale input:checked + span,
+  .scale label:has(input:checked) {
+    background: var(--brand);
+    color: #fff;
+    border-color: var(--brand);
+    font-weight: 600;
+  }
+  .scale small {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 2px;
+  }
+  .scale input:checked ~ small { color: rgba(255,255,255,.85); }
+
+  .yesno { display: flex; gap: 10px; flex-wrap: wrap; }
+  .yesno label {
+    flex: 1 1 110px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    text-align: center;
+    cursor: pointer;
+    background: #fff;
+  }
+  .yesno label:has(input:checked) {
+    background: var(--brand); color: #fff; border-color: var(--brand); font-weight: 600;
+  }
+  .yesno input { position: absolute; opacity: 0; pointer-events: none; }
+
+  .overall {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    justify-content: space-between;
+  }
+  .overall label {
+    flex: 1 1 36px;
+    text-align: center;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 4px;
+    cursor: pointer;
+    font-weight: 600;
+    background: #fff;
+  }
+  .overall label:has(input:checked) {
+    background: var(--brand); color: #fff; border-color: var(--brand);
+  }
+  .overall input { position: absolute; opacity: 0; pointer-events: none; }
+  .scale-ends {
+    display: flex; justify-content: space-between;
+    font-size: 12px; color: var(--muted); margin-top: 6px;
+  }
+
+  .actions {
+    display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;
+  }
+  button {
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+  button.primary {
+    background: var(--brand);
+    color: #fff;
+    flex: 1 1 auto;
+  }
+  button.primary:hover { background: #0b5f59; }
+  button.ghost {
+    background: #fff;
+    color: var(--ink);
+    border: 1px solid var(--border);
+  }
+
+  .thanks {
+    display: none;
+    text-align: center;
+    padding: 28px 18px;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    border-radius: var(--radius);
+    margin-top: 18px;
+    color: #065f46;
+  }
+  .thanks.show { display: block; }
+  .thanks h2 { margin: 0 0 6px; }
+
+  footer.note {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="logo">AS</div>
+      <h1>Alsafa Skin &amp; Hair Clinic — Triplicane</h1>
+      <p class="sub">Patient Feedback Form (Post-Procedure)</p>
+    </header>
+
+    <form id="feedbackForm" novalidate>
+      <!-- Patient details -->
+      <fieldset>
+        <legend>Your details</legend>
+        <div class="row">
+          <label class="field">
+            <span class="lab">Full name</span>
+            <input type="text" name="name" placeholder="Your name" required />
+          </label>
+          <label class="field">
+            <span class="lab">Phone number</span>
+            <input type="tel" name="phone" placeholder="10-digit mobile" pattern="[0-9+\-\s]{7,15}" />
+          </label>
+        </div>
+        <div class="row">
+          <label class="field">
+            <span class="lab">Date of visit</span>
+            <input type="date" name="visitDate" />
+          </label>
+          <label class="field">
+            <span class="lab">Procedure undergone</span>
+            <input type="text" name="procedure" placeholder="e.g., Laser, Chemical peel, Hair PRP" />
+          </label>
+        </div>
+        <label class="field">
+          <span class="lab">Doctor consulted</span>
+          <input type="text" name="doctor" placeholder="Doctor's name" />
+        </label>
+      </fieldset>
+
+      <!-- Doctor -->
+      <fieldset>
+        <legend>About the Doctor</legend>
+
+        <div class="q">
+          <div class="ask">1. How was the doctor's approach towards you?</div>
+          <div class="scale" data-name="docApproach">
+            <label><input type="radio" name="docApproach" value="5" /><span>Excellent</span><small>Warm &amp; caring</small></label>
+            <label><input type="radio" name="docApproach" value="4" /><span>Good</span><small>Friendly</small></label>
+            <label><input type="radio" name="docApproach" value="3" /><span>Okay</span><small>Neutral</small></label>
+            <label><input type="radio" name="docApproach" value="2" /><span>Poor</span><small>Rushed</small></label>
+            <label><input type="radio" name="docApproach" value="1" /><span>Very poor</span><small>Rude</small></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <div class="ask">2. Did the doctor clearly explain the procedure to you?</div>
+          <div class="scale" data-name="docExplain">
+            <label><input type="radio" name="docExplain" value="5" /><span>Very clear</span></label>
+            <label><input type="radio" name="docExplain" value="4" /><span>Clear</span></label>
+            <label><input type="radio" name="docExplain" value="3" /><span>Somewhat</span></label>
+            <label><input type="radio" name="docExplain" value="2" /><span>Unclear</span></label>
+            <label><input type="radio" name="docExplain" value="1" /><span>Not explained</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <div class="ask">3. Was the information about the procedure conveyed rightly (risks, benefits, duration, results)?</div>
+          <div class="yesno">
+            <label><input type="radio" name="conveyedRight" value="yes" /> Yes, fully</label>
+            <label><input type="radio" name="conveyedRight" value="partial" /> Partially</label>
+            <label><input type="radio" name="conveyedRight" value="no" /> No</label>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Procedure experience -->
+      <fieldset>
+        <legend>The Procedure Experience</legend>
+
+        <div class="q">
+          <div class="ask">4. Was the procedure affordable for you?</div>
+          <div class="yesno">
+            <label><input type="radio" name="affordable" value="very" /> Very affordable</label>
+            <label><input type="radio" name="affordable" value="reasonable" /> Reasonable</label>
+            <label><input type="radio" name="affordable" value="expensive" /> A bit expensive</label>
+            <label><input type="radio" name="affordable" value="unaffordable" /> Unaffordable</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <div class="ask">5. Was the procedure painless?</div>
+          <div class="yesno">
+            <label><input type="radio" name="painless" value="painless" /> Completely painless</label>
+            <label><input type="radio" name="painless" value="mild" /> Mild discomfort</label>
+            <label><input type="radio" name="painless" value="moderate" /> Moderately painful</label>
+            <label><input type="radio" name="painless" value="painful" /> Very painful</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <div class="ask">6. Were the post-procedural care instructions easy to follow?</div>
+          <div class="scale" data-name="postCare">
+            <label><input type="radio" name="postCare" value="5" /><span>Very easy</span></label>
+            <label><input type="radio" name="postCare" value="4" /><span>Easy</span></label>
+            <label><input type="radio" name="postCare" value="3" /><span>Manageable</span></label>
+            <label><input type="radio" name="postCare" value="2" /><span>Difficult</span></label>
+            <label><input type="radio" name="postCare" value="1" /><span>Very difficult</span></label>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Clinic -->
+      <fieldset>
+        <legend>Clinic &amp; Staff</legend>
+
+        <div class="q">
+          <div class="ask">7. How was the infrastructure of the clinic (cleanliness, equipment, ambience)?</div>
+          <div class="scale" data-name="infra">
+            <label><input type="radio" name="infra" value="5" /><span>Excellent</span></label>
+            <label><input type="radio" name="infra" value="4" /><span>Good</span></label>
+            <label><input type="radio" name="infra" value="3" /><span>Average</span></label>
+            <label><input type="radio" name="infra" value="2" /><span>Below avg.</span></label>
+            <label><input type="radio" name="infra" value="1" /><span>Poor</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <div class="ask">8. How was the receptionist — how were you received at the clinic?</div>
+          <div class="scale" data-name="reception">
+            <label><input type="radio" name="reception" value="5" /><span>Very warm</span></label>
+            <label><input type="radio" name="reception" value="4" /><span>Polite</span></label>
+            <label><input type="radio" name="reception" value="3" /><span>Okay</span></label>
+            <label><input type="radio" name="reception" value="2" /><span>Unhelpful</span></label>
+            <label><input type="radio" name="reception" value="1" /><span>Rude</span></label>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Overall -->
+      <fieldset>
+        <legend>Overall</legend>
+        <div class="q">
+          <div class="ask">9. Overall rating for Alsafa Skin &amp; Hair Clinic</div>
+          <div class="overall" data-name="overall">
+            <label><input type="radio" name="overall" value="1" />1</label>
+            <label><input type="radio" name="overall" value="2" />2</label>
+            <label><input type="radio" name="overall" value="3" />3</label>
+            <label><input type="radio" name="overall" value="4" />4</label>
+            <label><input type="radio" name="overall" value="5" />5</label>
+            <label><input type="radio" name="overall" value="6" />6</label>
+            <label><input type="radio" name="overall" value="7" />7</label>
+            <label><input type="radio" name="overall" value="8" />8</label>
+            <label><input type="radio" name="overall" value="9" />9</label>
+            <label><input type="radio" name="overall" value="10" />10</label>
+          </div>
+          <div class="scale-ends"><span>1 — Very poor</span><span>10 — Excellent</span></div>
+        </div>
+
+        <label class="field" style="margin-top:10px;">
+          <span class="lab">Would you recommend us to others?</span>
+          <select name="recommend">
+            <option value="">Select…</option>
+            <option value="definitely">Definitely yes</option>
+            <option value="probably">Probably yes</option>
+            <option value="maybe">Maybe</option>
+            <option value="no">No</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span class="lab">Any suggestions or comments (optional)</span>
+          <textarea name="comments" placeholder="Tell us what we did well, or what we can improve…"></textarea>
+        </label>
+      </fieldset>
+
+      <div class="actions">
+        <button type="submit" class="primary">Submit Feedback</button>
+        <button type="reset" class="ghost">Clear</button>
+      </div>
+    </form>
+
+    <div class="thanks" id="thanks">
+      <h2>Thank you!</h2>
+      <p>Your feedback helps us serve our patients better at Alsafa Skin &amp; Hair Clinic, Triplicane.</p>
+    </div>
+
+    <footer class="note">
+      Alsafa Skin &amp; Hair Clinic · Triplicane, Chennai
+    </footer>
+  </div>
+
+<script>
+  const form = document.getElementById('feedbackForm');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = form.querySelector('[name="name"]').value.trim();
+    if (!name) {
+      form.querySelector('[name="name"]').focus();
+      return;
+    }
+    const data = Object.fromEntries(new FormData(form).entries());
+    try { localStorage.setItem('alsafa_feedback_' + Date.now(), JSON.stringify(data)); } catch (e) {}
+    form.style.display = 'none';
+    document.getElementById('thanks').classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>
