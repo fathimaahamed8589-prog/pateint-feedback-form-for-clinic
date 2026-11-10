@@ -429,8 +429,13 @@
   </div>
 
 <script>
+  // Paste your Google Apps Script Web app URL here (see apps-script/Code.gs).
+  const ENDPOINT_URL = '';
+
   const form = document.getElementById('feedbackForm');
-  form.addEventListener('submit', (e) => {
+  const submitBtn = form.querySelector('button.primary');
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = form.querySelector('[name="name"]').value.trim();
     if (!name) {
@@ -438,7 +443,26 @@
       return;
     }
     const data = Object.fromEntries(new FormData(form).entries());
-    try { localStorage.setItem('alsafa_feedback_' + Date.now(), JSON.stringify(data)); } catch (e) {}
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting…';
+
+    // Always keep a local backup copy.
+    try { localStorage.setItem('alsafa_feedback_' + Date.now(), JSON.stringify(data)); } catch (_) {}
+
+    if (ENDPOINT_URL) {
+      try {
+        await fetch(ENDPOINT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(data)
+        });
+      } catch (err) {
+        console.error('Submit failed', err);
+      }
+    }
+
     form.style.display = 'none';
     document.getElementById('thanks').classList.add('show');
     window.scrollTo({ top: 0, behavior: 'smooth' });
